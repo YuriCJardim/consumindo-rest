@@ -16,7 +16,7 @@ import java.util.Map;
 @SpringBootTest
 public class ViaCepIntegracaoServiceTest {
 
-    @Value("https://viacep.com.br/")
+    @Value("${application.rest.url.viacep}")
     private String urlCep;
 
     public RestTemplate obterRestTemplateCep() {
@@ -25,16 +25,16 @@ public class ViaCepIntegracaoServiceTest {
                 .setReadTimeout(Duration.ofSeconds(1))
                 .build();
     }
+
     @Test
-    public void testIntegracaoCep() {
-        String fullUrl = "https://viacep.com.br/ws/{cep}/json/";
-        Map<String,String> params = new HashMap<>();
+    public void testSucessIntegracaoCep() {
+        String fullUrl = urlCep + "ws/{cep}/json/";
+        Map<String, String> params = new HashMap<>();
         params.put("cep", "71900100");
 
-        ResponseEntity<String> response =  obterRestTemplateCep().getForEntity(fullUrl,String.class, params);
+        ResponseEntity<String> response = obterRestTemplateCep().getForEntity(fullUrl, String.class, params);
         Assertions.assertEquals(response.getStatusCode(), HttpStatus.OK);
 
     }
-
 }
 
