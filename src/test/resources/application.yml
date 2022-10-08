@@ -1,0 +1,4 @@
+application:
+  rest:
+    url:
+      viacep: https://viacep.com.br/
